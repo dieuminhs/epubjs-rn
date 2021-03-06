@@ -5,6 +5,7 @@ import {
 import StaticServer from 'react-native-static-server';
 
 import RNFetchBlob from "rn-fetch-blob";
+import RNFS from "react-native-fs"
 
 import { zip, unzip, unzipAssets, subscribe } from 'react-native-zip-archive'
 
@@ -38,10 +39,11 @@ class EpubStreamer {
 
   setup() {
     // Add the directory
-    return RNFetchBlob.fs.exists(`${Dirs.DocumentDir}/${this.root}`)
+    return RNFS.exists(`${RNFS.DocumentDirectoryPath}/${this.root}`)
       .then((exists) => {
         if (!exists) {
-          return RNFetchBlob.fs.mkdir(`${Dirs.DocumentDir}/${this.root}`);
+          return RNFS.mkdir(`${Dirs.DocumentDir}/${this.root}`);
+          // return RNFetchBlob.fs.mkdir();
         }
       })
       .then(() => {
